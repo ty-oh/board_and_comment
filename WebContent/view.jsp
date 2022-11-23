@@ -90,13 +90,11 @@
 					<td colspan="2">
 						<input type="button" value="방명록 수정" onclick="location.href='update_page.jsp'"/>&nbsp;&nbsp;
 						<input type="button" value="방명록삭제" onclick="location.href='remove_page.jsp'">&nbsp;&nbsp;
-						<input type="button" value="목록으로 이동" onclick="location.href='index.jsp?${currentPage }'">
+						<input type="button" value="목록으로 이동" onclick="location.href='index.jsp?currentPage=${currentPage }'">
 					</td>
 				</tr>
 			</tbody>
 		</table>
 	</div>
-	
-	
 </body>
 </html>

@@ -38,6 +38,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			   sysdate)
 	</insert>
 	
-	
+	<delete id="remove_bbs" parameterType="int">
+		delete from bbs_t
+		where b_idx=#{b_idx}
+	</delete>
 	
 </mapper>

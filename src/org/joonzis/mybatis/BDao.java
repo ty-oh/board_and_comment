@@ -35,6 +35,8 @@ public class BDao {
 		return getSqlSession().insert("insert_bbs", vo); 
 	}
 	
-	
+	public static int removeBbs(int b_idx) {
+		return getSqlSession().delete("remove_bbs", b_idx);
+	}
 	
 }
