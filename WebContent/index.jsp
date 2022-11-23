@@ -1,3 +1,6 @@
+<%@page import="org.joonzis.mybatis.BDao"%>
+<%@page import="org.joonzis.mybatis.BVO"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
@@ -102,6 +105,10 @@
 	</style>
 </head>
 <body>
+	<%
+		List<BVO> list = BDao.getList();
+		pageContext.setAttribute("list", list);
+	%>
 	<div class="wrap">
 		<h1>BBS 게시판</h1>
 		<form action="">
@@ -123,6 +130,15 @@
 							</tr>
 						</c:when>
 						<c:otherwise>
+							<c:forEach var="vo" items="${list }">
+								<tr>
+									<td>${vo.b_idx}</td>
+									<td>${vo.title}</td>
+									<td>${vo.writer}</td>
+									<td>${vo.reg_date}</td>
+									<td>${vo.hit}</td>
+								</tr>
+							</c:forEach>
 						</c:otherwise>
 					</c:choose>
 				</tbody>
