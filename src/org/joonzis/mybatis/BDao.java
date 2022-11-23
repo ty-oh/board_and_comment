@@ -1,6 +1,7 @@
 package org.joonzis.mybatis;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 
@@ -17,8 +18,23 @@ public class BDao {
 		return sqlsession;
 	}
 	
-	public static List<BVO> getList() {
-		return getSqlSession().selectList("list_bbs");
+	public static List<BVO> getList(Map<String, Integer> map) {
+		return getSqlSession().selectList("list_bbs", map); 
 	}
+	
+	public static BVO getBbs(int b_idx) {
+		return getSqlSession().selectOne("one_bbs", b_idx);
+	}
+	 
+	//전체 데이터 개수 가져오기
+	public static int totalRecord() {
+		return getSqlSession().selectOne("total_record");
+	}
+	
+	public static int insertBbs(BVO vo) {
+		return getSqlSession().insert("insert_bbs", vo); 
+	}
+	
+	
 	
 }
