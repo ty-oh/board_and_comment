@@ -1,5 +1,8 @@
 package org.joonzis.mybatis;
 
+import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.session.SqlSession;
 
 public class BDao {
@@ -9,10 +12,29 @@ public class BDao {
 	//싱글톤
 	private synchronized static SqlSession getSqlSession() {
 		if (sqlsession == null) {
-			//factory를 선언하지 않고 바로 sqlseesion을 만든다.
 			sqlsession = DBService.getFactory().openSession(false);
-			// open Session(false) 수동 커밋 -> 기본 값을 수동 커밋 상태로 세션을 가져옴
 		}
+		
 		return sqlsession;
 	}
+	
+	public static List<BVO> getList(Map<String, Integer> map) {
+		return getSqlSession().selectList("list_bbs", map); 
+	}
+	
+	public static BVO getBbs(int b_idx) {
+		return getSqlSession().selectOne("one_bbs", b_idx);
+	}
+	 
+	//전체 데이터 개수 가져오기
+	public static int totalRecord() {
+		return getSqlSession().selectOne("total_record");
+	}
+	
+	public static int insertBbs(BVO vo) {
+		return getSqlSession().insert("insert_bbs", vo); 
+	}
+	
+	
+	
 }

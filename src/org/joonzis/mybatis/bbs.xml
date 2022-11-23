@@ -3,62 +3,41 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
-<mapper namespace="org.joonzis.mybatis.green"><!-- 경로표기법이 클래스명 표기법처럼 사용 -->
-	<!-- 
-		Mapper에서는 ?(물음표)를 사용할 수 없다.
-		대신 전달한 파라미터의 이름은 #{}을 통해 적는다.
-		sql문 뒤에 ;(세미콜론)이 없다.
-	 -->
-	<!-- 
-		select 태그 속성
-		1. id : id를 통해서 sql문을 선택(id는 임의로 결정 가능)
-		2. parameterType : 매개변수 타입
-		3. resultType : 리턴의 타입(풀패키지로 적어야한다.)
-	 -->
-	<select id="select_all" resultType="org.joonzis.mybatis.GuestbookVo">
-		select * from guestbook order by idx desc
+<mapper namespace="org.joonzis.mybatis.bbs"><!-- 경로표기법이 클래스명 표기법처럼 사용 -->
+	<select id="total_record" resultType="int">
+		select count(b_idx)
+		from bbs_t
+	</select>
+
+	<select id="list_bbs" parameterType="map" resultType="org.joonzis.mybatis.BVO">
+		select *
+		from (select rownum r_num, a.*
+      		  from (select *
+            		from bbs_t
+            		order by b_idx desc) a)
+		where r_num BETWEEN #{begin} and #{end}
 	</select>
 	
-	<select id="select_by_idx" parameterType="int" resultType="org.joonzis.mybatis.GuestbookVo">
-		select * from guestbook where idx=#{idx}
+	<select id="one_bbs" parameterType="int" resultType="org.joonzis.mybatis.BVO">
+		select *
+		from bbs_t
+		where b_idx=#{b_idx}
 	</select>
 	
-	<!-- 
-		insert / update / delete 태그 속성
-		1. id : id를 통해서 sql문을 선택(id는 임의로 결정 가능)
-		2. parameterType : 매개변수 타입
-		(resultType : 리턴의 타입이 없는 이유 : 어차피 int로 고정되어 있으므로 사용X)
-	 -->
 	
-	<insert id="insert" parameterType="org.joonzis.mybatis.GuestbookVo">
-		insert into guestbook
-		values(
-			guestbook_seq.nextval,
-			#{writer},
-			#{email},
-			#{pw},
-			#{filename},
-			#{title},
-			#{content},
-			sysdate
-		)
+	<insert id="insert_bbs" parameterType="org.joonzis.mybatis.BVO">
+		insert into bbs_t
+		values(bbs_seq.nextval, 
+			   #{writer}, 
+			   #{title}, 
+			   #{content}, 
+			   #{pw}, 
+			   0,
+			   #{ip}, 
+			   #{filename}, 
+			   sysdate)
 	</insert>
 	
-	<update id="update" parameterType="org.joonzis.mybatis.GuestbookVo">
-		update guestbook
-		set writer=#{writer},
-			email=#{email}, 
-			pw=#{pw}, 
-			title=#{title}, 
-			content=#{content} 
-		where idx=#{idx}
-	</update>
 	
-	<delete id="delete" parameterType="org.joonzis.mybatis.GuestbookVo">
-		delete from guestbook 
-		where writer=#{writer} and 
-			  pw=#{pw} and
-			  idx=#{idx}
-	</delete>
 	
 </mapper>
