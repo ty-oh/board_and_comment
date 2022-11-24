@@ -52,7 +52,6 @@
 		request.setCharacterEncoding("utf-8");
 		int b_idx = Integer.parseInt(request.getParameter("b_idx"));
 		String currentPage = request.getParameter("currentPage");
-		
 		BVO bvo = BDao.getBbs(b_idx);
 		
 		//session open .. 추후

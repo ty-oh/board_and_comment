@@ -1,3 +1,6 @@
+<%@page import="java.io.File"%>
+<%@page import="com.oreilly.servlet.multipart.DefaultFileRenamePolicy"%>
+<%@page import="com.oreilly.servlet.MultipartRequest"%>
 <%@page import="org.joonzis.mybatis.BDao"%>
 <%@page import="org.joonzis.mybatis.BVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -12,21 +15,50 @@
 </head>
 <body>
 	<%
-		request.setCharacterEncoding("utf-8");
-	
+		String realPath = request.getServletContext().getRealPath("/upload");
+		MultipartRequest mr = new MultipartRequest(
+				request,
+				realPath,
+				1024*1024*10,
+				"utf-8",
+				new DefaultFileRenamePolicy()
+				);
+				
+		BVO bvo = new BVO();
+		/* 
+			첨부파일 수정
+			1. 기존 첨부가 있는경우
+				1) 새 첨부가 없으면 기존 첨부 그대로 사용
+				2) 새 첨부가 있으면 기존 첨부 삭제 후 첨부 사용
+			2. 기존 첨부가 없는 경우
+				1) 새 첨부 사용
+		*/
+		File newfile = mr.getFile("filename");
+		String oldfile = mr.getParameter("oldfile");
+		if(newfile != null) {		// 새 첨부 파일 O
+			if(oldfile != null) {	// 기존 첨부 파일 O
+				File removeFile = new File(realPath + "/" + oldfile);
+				if (removeFile.exists()) {	// 기존 첨부파일 유무 확인
+					removeFile.delete();	// 기존 첨부 파일 삭제
+				}
+			}
+			bvo.setFilename(newfile.getName()); // 새 첨부 파일 이름 가져오기
+		} else {	// 새 첨부파일 X
+			if(oldfile != null) {		// 기존 첨부 파일 O
+				bvo.setFilename(oldfile);
+			} else {
+				bvo.setFilename("");	// 새 첨부파일 X, 기존 첨부파일 X
+			}
+		}
+		 
+		 
 		BVO bbsInfo = (BVO)session.getAttribute("bbsInfo");
-		BVO vo = new BVO();
-		vo.setB_idx(bbsInfo.getB_idx());
-		vo.setWriter(bbsInfo.getWriter());
-		vo.setTitle(request.getParameter("title"));
-		vo.setContent(request.getParameter("content"));
+		bvo.setB_idx(Integer.parseInt(mr.getParameter("b_idx")));
+		bvo.setWriter(mr.getParameter("writer"));
+		bvo.setTitle(mr.getParameter("title"));
+		bvo.setContent(mr.getParameter("content"));
 		
-		out.println(vo.getB_idx());
-		out.println(vo.getWriter());
-		out.println(vo.getTitle());
-		out.println(vo.getContent());
-		
-		int result = BDao.updateBbs(vo);
+		int result = BDao.updateBbs(bvo);
 		pageContext.setAttribute("result", result);
 	%>
 	

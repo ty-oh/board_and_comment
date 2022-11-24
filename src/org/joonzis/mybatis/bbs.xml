@@ -45,7 +45,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="update_bbs" parameterType="org.joonzis.mybatis.BVO">
 		update bbs_t
 		set title=#{title},
-			content=#{content}
+			content=#{content},
+			filename=#{filename}
 		where b_idx=#{b_idx}
 	</update>
 	

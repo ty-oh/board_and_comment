@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -30,8 +31,9 @@
 			f.submit();
 		}
 		
-		var back = function() {
-			history.back();
+		var view_all = function(f) {
+			f.action='index.jsp';
+			f.submit();
 		}
 	</script>
 	<style type="text/css">
@@ -61,35 +63,63 @@
 <body>
 	<div>
 		<h2>게시글 수정</h2>
-		<form method="post">
+		<form method="post" enctype="multipart/form-data">
 			<table>
 				<tbody>
 					<tr>
 						<th>작성자</th>
-						<td>${bbsInfo.writer }</td>
+						<td>
+							${bbsInfo.writer }
+							<input type="hidden" name="writer" value="${bbsInfo.writer }">
+						</td>
 					</tr>
 					<tr>
 						<th>제목</th>
-						<td><input type="text" name="title" size="80" value="${bbsInfo.title }"/></td>
+						<td>
+							<input type="text" name="title" size="80" value="${bbsInfo.title }"/>
+						</td>
 					</tr>
 					<tr>
 						<th>비밀번호 확인</th>
-						<td><input type="password" name="pw" size="80" /></td>
+						<td>
+							<input type="password" name="pw" size="80" />
+						</td>
 					</tr>
 					<tr>
 						<th>첨부파일</th>
-						<td><a href="#">${bbsInfo.filename }</a></td>
+						<td>
+							<input type="file" name="filename">
+							<c:choose>
+								<c:when test="${bbsInfo.filename eq null }">
+									[ 기존 첨부 파일 : 없음 ]
+								</c:when>
+								<c:otherwise>
+									[ 기존 첨부 파일 : ${bbsInfo.filename } ]
+									<input type="hidden" name="oldfile" value="${bbsInfo.filename }">
+								</c:otherwise>
+							</c:choose>
+							<a href="#">${bbsInfo.filename }</a>
+						</td>
 					</tr>
 					<tr>
 						<th>내용</th>
-						<td><textarea rows="10" cols="80" name="content" placeholder="내용을 입력해주세요." style="resize:none">${bbsInfo.content}</textarea></td>
+						<td>
+							<textarea rows="10" cols="80" name="content" placeholder="내용을 입력해주세요." style="resize:none">${bbsInfo.content}</textarea>
+						</td>
 					</tr>
 					<tr>
 						<td colspan="2">
 							<div id="btn">							
-								<input type="button" value="수정 완료" onclick="update(this.form)"/>&nbsp;&nbsp;
-								<input type="reset" value="다시작성">
-								<input type="button" value="목록으로 이동" onclick="back()">
+								<input type="button" value="게시글 수정" onclick="update(this.form);"/>&nbsp;&nbsp;
+								<input type="reset" value="다시 작성" />&nbsp;&nbsp;
+								<%
+									request.setCharacterEncoding("utf-8");
+									String currentPage = request.getParameter("currentPage");
+									pageContext.setAttribute("currentPage", currentPage);
+								%>
+								<input type="button" value="목록으로 이동" onclick="location.href='index.jsp?currentPage=${currentPage}'" />
+								<!-- updqte.jsp에게 넘겨줄 파라미터를 hidden으로 처리 -->
+								<input type="hidden" name="b_idx" value="${bbsInfo.b_idx }" />
 							</div>
 						</td>
 					</tr>

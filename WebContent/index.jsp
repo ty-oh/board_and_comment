@@ -120,6 +120,7 @@
 		
 		// 4. 현재 페이지 번호 구하기
 		String currentPage = request.getParameter("currentPage");
+		System.out.println(currentPage);
 		if (currentPage != null && !currentPage.isEmpty()) {
 			pvo.setNowPage(Integer.parseInt(currentPage));
 		}
