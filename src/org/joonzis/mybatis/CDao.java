@@ -1,5 +1,7 @@
 package org.joonzis.mybatis;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 
 public class CDao {
@@ -21,4 +23,7 @@ public class CDao {
 		return result;
 	}
 	
+	public static List<CVO> selectAll(int b_idx) {
+		return getSqlSession().selectList("select_all_comment", b_idx); 
+	}
 }
