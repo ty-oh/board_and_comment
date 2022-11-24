@@ -19,6 +19,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	
 	<mappers>
         <mapper resource="org/joonzis/mybatis/bbs.xml"/>
+        <mapper resource="org/joonzis/mybatis/comment.xml"/>
 	</mappers>
 	
 </configuration>

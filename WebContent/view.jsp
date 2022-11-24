@@ -45,6 +45,10 @@
 			f.action='index.jsp';
 			f.submit();
 		}
+		var insert_comment= function(f) {
+			f.action='insert_comment.jsp';
+			f.submit();
+		}
 	</script>
 </head>
 <body>
@@ -102,7 +106,7 @@
 					</tr>
 					<tr>
 						<td colspan="2">
-							<div>
+							<div id="btn">
 								<input type="button" value="게시글 수정하기" onclick="update_page(this.form)"/>&nbsp;&nbsp;
 								<input type="button" value="게시글 삭제하기" onclick="remove_page(this.form)">&nbsp;&nbsp;
 								<input type="button" value="목록으로 이동" onclick="view_all(this.form)">
@@ -122,7 +126,7 @@
 					<tr>
 						<th>댓글 작성자</th>
 						<td><input type="text" name="writer" /></td>
-						<th>댓글 작성자</th>
+						<th>비밀번호</th>
 						<td><input type="password" name="pw" /></td>
 					</tr>
 					<tr>
@@ -139,6 +143,39 @@
 							<input type="hidden" name="currentPage" value="${currentPage }">&nbsp;&nbsp;
 						</td>
 					</tr>
+				</tbody>
+			</table>
+		</form>
+		
+		<br/><br/><br/>
+		<!-- 댓글 출력 폼 -->
+		<%
+			// 댓글 데이터 가져오기
+			
+			
+		%>
+		<form method="post" action="remove_comment.jsp">
+			<table class="viewComment">
+				<thead>
+					<tr>
+						<th id="num">번호</th>
+						<th id="writer">작성자</th>
+						<th id="con">내용</th>
+						<th id="date">작성일</th>
+						<th id="del">삭제</th>						
+					</tr>
+				</thead>
+				<tbody>
+					<c:choose>
+						<c:when test="${not empty cList }">
+							
+						</c:when>
+						<c:otherwise>
+							<tr>
+								<td colspan="5">댓글이 없습니다.</td>
+							</tr>
+						</c:otherwise>
+					</c:choose>
 				</tbody>
 			</table>
 		</form>

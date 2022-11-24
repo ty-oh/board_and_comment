@@ -51,8 +51,6 @@
 			}
 		}
 		 
-		 
-		BVO bbsInfo = (BVO)session.getAttribute("bbsInfo");
 		bvo.setB_idx(Integer.parseInt(mr.getParameter("b_idx")));
 		bvo.setWriter(mr.getParameter("writer"));
 		bvo.setTitle(mr.getParameter("title"));
@@ -60,14 +58,17 @@
 		
 		int result = BDao.updateBbs(bvo);
 		pageContext.setAttribute("result", result);
+		
+		String currentPage = mr.getParameter("currentPage");
+		pageContext.setAttribute("currentPage", currentPage);
 	%>
-	
 	<c:choose>
 		<c:when test="${result gt 0 }">
 			<script type="text/javascript">
 				alert('게시글을 수정하였습니다.');
 				var b_idx= "${bbsInfo.b_idx}";
-				location.href='view.jsp?b_idx='+b_idx;
+				var currentPage="${currentPage}"
+				location.href='view.jsp?b_idx='+b_idx+'&currentPage='+currentPage;
 			</script>
 		</c:when>
 		<c:otherwise>
@@ -77,6 +78,5 @@
 			</script>
 		</c:otherwise>
 	</c:choose>
-	
 </body>
 </html>

@@ -119,6 +119,7 @@
 								%>
 								<input type="button" value="목록으로 이동" onclick="location.href='index.jsp?currentPage=${currentPage}'" />
 								<!-- updqte.jsp에게 넘겨줄 파라미터를 hidden으로 처리 -->
+								<input type="hidden" name="currentPage" value="${currentPage }" />
 								<input type="hidden" name="b_idx" value="${bbsInfo.b_idx }" />
 							</div>
 						</td>

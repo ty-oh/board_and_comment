@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="org.joonzis.mybatis.comment"><!-- 경로표기법이 클래스명 표기법처럼 사용 -->
+
+	<insert id="insert_comment" parameterType="org.joonzis.mybatis.CVO">
+		insert into comment_t
+		values(comment_seq.nextval, 
+			   #{writer}, 
+			   #{content}, 
+			   #{pw}, 
+			   #{ip},  
+			   sysdate,
+			   #{b_idx})
+	</insert>
+
+	
+</mapper>

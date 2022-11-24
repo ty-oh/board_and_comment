@@ -67,8 +67,10 @@
 					</tr>
 					<tr>
 						<td colspan="2">
-							<input type="button" value="삭제" onclick="removeBbs(this.form)"/>&nbsp;&nbsp;
-							<input type="button" value="취소" onclick="back()">
+							<div id="btn">
+								<input type="button" value="삭제" onclick="removeBbs(this.form)"/>&nbsp;&nbsp;
+								<input type="button" value="취소" onclick="back()">
+							</div>
 						</td>
 					</tr>
 				</tbody>

@@ -18,7 +18,6 @@
 		int result = BDao.removeBbs(bbsInfo.getB_idx());
 		pageContext.setAttribute("result", result);
 	%>
-	
 	<c:choose>
 		<c:when test="${result gt 0 }">
 			<script type="text/javascript">
@@ -29,7 +28,7 @@
 		<c:otherwise>
 			<script type="text/javascript">
 				alert('게시글을 삭제하지 못했습니다.');
-				history.back();
+				history.go(-2);
 			</script>
 		</c:otherwise>
 	</c:choose>
