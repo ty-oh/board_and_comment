@@ -172,8 +172,9 @@
 					<c:choose>
 						<c:when test="${not empty cList }">
 							<c:forEach var="c" items="${cList }">
+								<c:set var="cnt" value="${cnt + 1 }"/>
 								<tr>
-									<td>${c.c_idx }</td>
+									<td>${cnt }</td>
 									<td>${c.writer }</td>
 									<td>${c.content }</td>
 									<td>${c.reg_date }</td>
