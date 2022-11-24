@@ -1,3 +1,6 @@
+<%@page import="org.joonzis.mybatis.CDao"%>
+<%@page import="org.joonzis.mybatis.CVO"%>
+<%@page import="java.util.List"%>
 <%@page import="org.joonzis.mybatis.BDao"%>
 <%@page import="org.joonzis.mybatis.BVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -132,7 +135,7 @@
 					<tr>
 						<th>댓글 내용 </th>
 						<td colspan="3">
-							<textarea rows="3" cols="80" name="content" placeholder="댓글을 입력하세요."></textarea>
+							<textarea rows="3" cols="80" name="content" placeholder="댓글을 입력하세요." style="resize:none;"></textarea>
 						</td>
 					</tr>
 					<tr>
@@ -151,8 +154,8 @@
 		<!-- 댓글 출력 폼 -->
 		<%
 			// 댓글 데이터 가져오기
-			
-			
+			List<CVO> cList = CDao.selectAll(b_idx);
+			pageContext.setAttribute("cList", cList);
 		%>
 		<form method="post" action="remove_comment.jsp">
 			<table class="viewComment">
@@ -168,7 +171,15 @@
 				<tbody>
 					<c:choose>
 						<c:when test="${not empty cList }">
-							
+							<c:forEach var="c" items="${cList }">
+								<tr>
+									<td>${c.c_idx }</td>
+									<td>${c.writer }</td>
+									<td>${c.content }</td>
+									<td>${c.reg_date }</td>
+									<td><a href="#">삭제</a></td>
+								</tr>
+							</c:forEach>
 						</c:when>
 						<c:otherwise>
 							<tr>
