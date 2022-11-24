@@ -52,6 +52,16 @@
 			f.action='insert_comment.jsp';
 			f.submit();
 		}
+		var remove_comment = function(pw, c_idx, b_idx, currentPage) {
+			var pwCheck = prompt('비밀번호를 입력하세요.');
+			var isPwCorrect = pw == pwCheck;
+			if (!isPwCorrect) {
+				alert('비밀번호가 틀립니다.');
+				return;
+			}
+			
+			location.href='remove_comment.jsp?c_idx=' + c_idx + '&b_idx=' + b_idx + '&currentPage=' + currentPage;
+		}
 	</script>
 </head>
 <body>
@@ -172,12 +182,13 @@
 					<c:choose>
 						<c:when test="${not empty cList }">
 							<c:forEach var="c" items="${cList }">
+								<c:set var="cnt" value="${cnt + 1 }"/>
 								<tr>
-									<td>${c.c_idx }</td>
+									<td>${cnt }</td>
 									<td>${c.writer }</td>
 									<td>${c.content }</td>
 									<td>${c.reg_date }</td>
-									<td><a href="#">삭제</a></td>
+									<td><a href="#" onclick="remove_comment(${c.pw}, ${c.c_idx }, ${c.b_idx }, ${currentPage })">삭제</a></td>
 								</tr>
 							</c:forEach>
 						</c:when>
