@@ -32,11 +32,27 @@ public class BDao {
 	}
 	
 	public static int insertBbs(BVO vo) {
-		return getSqlSession().insert("insert_bbs", vo); 
+		int result = getSqlSession().insert("insert_bbs", vo);
+		if (result > 0) {
+			getSqlSession().commit();
+		}
+		return result;
+	}
+	
+	public static int updateBbs(BVO vo) {
+		int result = getSqlSession().update("update_bbs", vo);
+		if (result > 0) {
+			getSqlSession().commit();
+		}
+		return result;
 	}
 	
 	public static int removeBbs(int b_idx) {
-		return getSqlSession().delete("remove_bbs", b_idx);
+		int result = getSqlSession().delete("remove_bbs", b_idx);
+		if (result > 0) {
+			getSqlSession().commit();
+		}
+		return result;
 	}
 	
 }

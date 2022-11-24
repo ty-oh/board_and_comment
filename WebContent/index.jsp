@@ -19,42 +19,33 @@
 	      margin:auto;
 	      text-align: center;   
 	   }
-	   
 	   table {
 	      width: 800px;
 	      border-collapse: collapse;   
 	   }
-	   
 	   td, th {
 	      border : 1px solid #1e90ff;
 	      padding: 10px;
 	   }
-	   
 	   thead { 
 	      background-color: #0078aa;
 	      color: white;   
 	   }
-	      
 	   th:nth-of-type(1) {
 	      width:50px;
 	   }
-	   
 	   th:nth-of-type(2) {
 	      width:300px;
 	   }
-	   
 	   th:nth-of-type(3) {
 	      width:100px;
 	   }
-	   
 	   th:nth-of-type(4) {
 	      width:100px;
 	   }   
-	   
 	   th:nth-of-type(5) {
 	      width:50px;
 	   }   
-	   
 	   h1 {
 	      color : #0078aa;   
 	   }
