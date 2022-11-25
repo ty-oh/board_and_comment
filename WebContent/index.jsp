@@ -145,8 +145,10 @@
 		pageContext.setAttribute("pvo", pvo);
 		
 		//4. 게시물이 열린 경우 session에 저장
-		
-		
+		String open = (String)session.getAttribute("open");
+		if (open != null) {
+			session.removeAttribute("open");
+		}
 		
 	%>
 	<div class="wrap">

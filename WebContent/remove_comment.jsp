@@ -13,7 +13,7 @@
 		int c_idx = Integer.parseInt(request.getParameter("c_idx"));
 		int b_idx = Integer.parseInt(request.getParameter("b_idx"));
 		String currentPage = request.getParameter("currentPage");
-		System.out.println(currentPage);
+
 		int result = CDao.removeComment(c_idx);
 		
 		response.sendRedirect("view.jsp?b_idx=" + b_idx + "&currentPage=" + currentPage);

@@ -50,4 +50,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where b_idx=#{b_idx}
 	</update>
 	
+	<update id="update_hit" parameterType="org.joonzis.mybatis.BVO">
+		update bbs_t
+		set hit=#{hit}
+		where b_idx=#{b_idx}
+	</update>
 </mapper>

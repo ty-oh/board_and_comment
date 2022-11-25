@@ -71,7 +71,17 @@
 		String currentPage = request.getParameter("currentPage");
 		BVO bvo = BDao.getBbs(b_idx);
 		
-		//session open .. 추후
+		// 처음으로 view를 열었을 떄만 조회수가 증가해야함
+		// 게시물을 열 때 session에 open이라는 값을 저장
+		// session에 open값이 있으면 조회수를 증가시키지 않고, open 값이 없으면 조회수를 증가
+		String open = (String)session.getAttribute("open");
+		if (open == null) {
+			session.setAttribute("open", "y"); //value는 아무거나
+			int hit = bvo.getHit() + 1;
+			bvo.setHit(hit);
+			BDao.getUpdateHit(bvo);
+		}
+		
 		//수정, 삭제를 위해서 session에 bvo를 저장
 		session.setAttribute("bbsInfo", bvo);
 		pageContext.setAttribute("currentPage", currentPage);
@@ -143,7 +153,7 @@
 						<td><input type="password" name="pw" /></td>
 					</tr>
 					<tr>
-						<th>댓글 내용 </th>
+						<th>댓글 내용</th>
 						<td colspan="3">
 							<textarea rows="3" cols="80" name="content" placeholder="댓글을 입력하세요." style="resize:none;"></textarea>
 						</td>

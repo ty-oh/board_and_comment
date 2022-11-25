@@ -19,6 +19,11 @@ public class CDao {
 		return getSqlSession().selectList("select_all_comment", b_idx); 
 	}
 	
+	public static int countComment(int b_idx) {
+		return getSqlSession().selectOne("count_comment", b_idx);
+	}
+	
+	
 	public static int insertComment(CVO cvo) {
 		int result = getSqlSession().insert("insert_comment", cvo);
 		if (result > 0) {
@@ -34,4 +39,9 @@ public class CDao {
 		}
 		return result;
 	}
+	
+	public static int removeAllComment(int b_idx) {
+		return getSqlSession().delete("remove_all_comment", b_idx);
+	}
+	
 }

@@ -55,4 +55,11 @@ public class BDao {
 		return result;
 	}
 	
+	public static int getUpdateHit(BVO bvo) {
+		int result = getSqlSession().update("update_hit", bvo);
+		if (result > 0) {
+			getSqlSession().commit();
+		}
+		return result;
+	}
 }
